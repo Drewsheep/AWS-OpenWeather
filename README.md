@@ -35,7 +35,7 @@ Ennek a projektnek az a célja, hogy a felhasználók időjárás adatokat tudja
  - 📈 **Auto Scaling Group** használata `->` Az alkalmazás képes automatikusan skálázódni a változó igényekhez
 
 ## 👤 Hogyan tudom megnézni az oldalt?
-Az egész projekt elérhető és kipróbálható online a **`...`** oldalon.
+Az egész projekt elérhető és kipróbálható online a **`http://openweather-lb-ui-1261494571.eu-west-1.elb.amazonaws.com/`** oldalon.
  
 ### ℹ️ 2025/2026 - Felhőalapú szolgáltatások
  - © 2025 Baranyai András `AEN3WU` — Szabó Adrián Csaba `BZ8PAM` — Molnár Gergely `JMWZAL`
