@@ -1,6 +1,12 @@
 # 🌥️ AWS Cloud - OpenWeather
 Ennek a projektnek az a célja, hogy a felhasználók időjárás adatokat tudjanak lekérni egy adott városról. Ezeket az adatokat el is tudják menteni egy listába, ahol kedvük szerint törölhetik is azt. Az egész projekt a **felhő alapú infrastruktúrát / szolgáltatást** használ. Jó ötletnek találtuk, hogy a stílus is picit NJE-s legyen :)
 
+## 🧩 Előkészítés
+ - Létrehozni egy **virtuális** környezetet -> `python -m venv .venv`
+ - Ezt a környezetet aktiváli kell (pl. PowerShell-be) -> `.\.venv\Scripts\activate`
+ - Majd telepíteni a Flasket -> `pip install flask`
+ - Végül elindítani az alkalmazást -> `python app.py`
+
 ## 🧱 Felépítés
  - **Frontend (UI):** Webes felhasználói felület PHP-ben, NJE stílusban
  - **Backend (API):** Python (Flask) API, amely az időjárás adatokat biztosítja
