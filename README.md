@@ -1,3 +1,4 @@
+<p align="center"><img src="aws_logo.png" height="160"></p>
 # 🌥️ AWS Cloud - OpenWeather
 Ennek a projektnek az a célja, hogy a felhasználók időjárás adatokat tudjanak lekérni egy adott városról. Ezeket az adatokat el is tudják menteni egy listába, ahol kedvük szerint törölhetik is azt. Az egész projekt a **felhő alapú infrastruktúrát / szolgáltatást** használ. Jó ötletnek találtuk, hogy a stílus is picit NJE-s legyen :)
 
@@ -20,13 +21,14 @@ Ennek a projektnek az a célja, hogy a felhasználók időjárás adatokat tudja
 ## 🧱 Felépítés
  - **Frontend (UI):** Webes felhasználói felület PHP-ben, NJE stílusban
  - **Backend (API):** Python (Flask) API, amely az időjárás adatokat biztosítja
- - **Felhő infrastruktúra:** AWS használata
+ - **Felhő infrastruktúra:** Amazon Web Services
  - **Adatbázis:** RDS (Relációs Adatbázis Szolgáltatás)
 
 ## 💡 Tulajdonságok
  - 🐍 **Python** (Flask) + 🐘 **PHP** alapú
  - 🌐 **VPC** használata `->` A rendszer teljesen izolált hálózaton fut, biztonságos adatkezeléssel
  - 🗄️ **RDS** használata `->` Az időjárás adatokat és a felhasználói beállításokat az Amazon RDS-ben tároljuk
+ - 🪣 **S3 Bucket** használata
  - 💻 **2 darab EC2** szolgáltatás használata `->` A backend és frontend különböző EC2 instanciákon futnak a nagyobb teljesítmény és biztonság érdekében
  - ⚖️ **Load Balancer** használata `->` A terhelés elosztásához az AWS Load Balancer biztosítja az optimális teljesítményt
  - 📈 **Auto Scaling Group** használata `->` Az alkalmazás képes automatikusan skálázódni a változó igényekhez
