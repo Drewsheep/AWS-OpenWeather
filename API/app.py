@@ -10,7 +10,7 @@ load_dotenv()
 # Flask app létrehozás
 app = Flask(__name__)
 
-# Mjad kinyerjük az .env-ből
+# Majd kinyerjük az .env-ből
 API_KEY = os.getenv("API_KEY")
 
 # Alapvető MySQL adatok
@@ -20,12 +20,14 @@ DB_PASS = os.getenv("DB_PASS")
 DB_NAME = os.getenv("DB_NAME")
 
 # Hozzákapcsolódunk a db-hez
-db = mysql.connector.connect(
-    host=DB_HOST,
-    user=DB_USER,
-    password=DB_PASS,
-    database=DB_NAME
-)
+def get_db_connection():
+	return mysql.connector.connect(
+        host="DB_HOST",
+        user="DB_USER",
+        password="DB_PASS",
+        database="DB_NAME",
+    	ssl_disabled=True
+	)
 
 # Lekérjük az aktuális időjárást
 @app.get("/weather/<city>")
@@ -78,43 +80,67 @@ def get_forecast(city):
 @app.post("/weather/save")
 def save_weather():
     data = request.json
+    db = get_db_connection()
     cursor = db.cursor()
 
-    # Itt szúrjuk be
-    cursor.execute("""
-        INSERT INTO weather_data 
-        (city, temperature, feels_like, temp_min, temp_max, humidity, pressure, wind_speed, description, icon)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-    """, (
-        data["city"],
-        data["temperature"],
-        data["feels_like"],
-        data["temp_min"],
-        data["temp_max"],
-        data["humidity"],
-        data["pressure"],
-        data["wind_speed"],
-        data["description"],
-        data["icon"]
-    ))
+    try:
+        cursor.execute("""
+            INSERT INTO weather_data 
+            (city, temperature, feels_like, temp_min, temp_max, humidity, pressure, wind_speed, description, icon)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
+            data["city"],
+            data["temperature"],
+            data["feels_like"],
+            data["temp_min"],
+            data["temp_max"],
+            data["humidity"],
+            data["pressure"],
+            data["wind_speed"],
+            data["description"],
+            data["icon"]
+        ))
 
-    db.commit()
-    return jsonify({"status": "saved"})
+        db.commit()
+        return jsonify({"status": "saved"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        cursor.close()
+        db.close()
 
 # Itt lekérhetjük az összes mentett időjárást ha akarjuk
 @app.get("/weather/all")
 def get_all():
+    db = get_db_connection()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM weather_data")
-    return jsonify(cursor.fetchall())
 
-# Adott időjárási adat törlése
+    try:
+        cursor.execute("SELECT * FROM weather_data")
+        return jsonify(cursor.fetchall())
+
+    finally:
+        cursor.close()
+        db.close()
+
+
+#Adott időjárási adat törlése
 @app.delete("/weather/<int:id>")
 def delete_weather(id):
+    db = get_db_connection()
     cursor = db.cursor()
-    cursor.execute("DELETE FROM weather_data WHERE id=%s", (id,))
-    db.commit()
-    return jsonify({"status": "deleted"})
+
+    try:
+        cursor.execute("DELETE FROM weather_data WHERE id=%s", (id,))
+        db.commit()
+        return jsonify({"status": "deleted"})
+
+    finally:
+        cursor.close()
+        db.close()
+
 
 if __name__ == "__main__":
     # debug=False esetén nem ír ki hibákat
